@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hán Ngữ Mỗi Ngày</title>
+<style>
+:root {
+  --site-primary: #B83B35;
+  --site-on-primary: #FFFFFF;
+  --site-secondary: #F1D9B8;
+  --site-on-secondary: #3C2921;
+  --site-background: #FFF9F1;
+  --site-on-background: #292522;
+  --site-font-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: ui-serif, Georgia, "Times New Roman", serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --surface: light-dark(#FFFFFF, #242321);
+  --surface-soft: light-dark(#FFF0E0, #302B27);
+  --muted: light-dark(#716963, #C0B7AE);
+  --line: light-dark(#E8DCCF, #49423C);
+  --good: light-dark(#28734F, #8BD6AA);
+  --bad: light-dark(#B83B35, #FFAAA4);
+  color-scheme: light dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--site-font-body); background: var(--site-background); color: var(--site-on-background); line-height: 1.55; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+#app { background-color: var(--site-background); color: var(--site-on-background); min-height: 100vh; border-radius: 0; overflow: hidden; }
+.wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+.topbar { background: var(--site-primary); color: var(--site-on-primary); }
+.top-inner { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:74px; }
+.brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:-.02em; }
+.brand-mark { width:42px; height:42px; display:grid; place-items:center; border-radius:50%; color:var(--site-primary); background:var(--site-secondary); font-family:var(--site-font-heading); font-size:25px; }
+.brand small { display:block; font-size:11px; font-weight:500; opacity:.8; letter-spacing:.12em; text-transform:uppercase; }
+.nav { display:flex; gap:5px; align-items:center; flex-wrap:wrap; }
+.nav button { border:0; background:transparent; color:inherit; padding:10px 12px; border-radius:999px; font-size:14px; }
+.nav button:hover,.nav button.active { background:rgba(255,255,255,.17); }
+.menu-toggle { display:none; border:1px solid rgba(255,255,255,.35); color:inherit; background:transparent; padding:8px 12px; border-radius:12px; }
+.hero { position:relative; padding:64px 0 58px; background:var(--site-secondary); color:var(--site-on-secondary); overflow:hidden; }
+.hero:after { content:'汉'; position:absolute; right:5%; top:-70px; font-family:var(--site-font-heading); font-size:clamp(230px,35vw,430px); line-height:1; opacity:calc(.07 * var(--site-decoration-opacity)); pointer-events:none; }
+.hero-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center; position:relative; z-index:1; }
+.eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; color:var(--site-primary); }
+h1,h2,h3 { font-family:var(--site-font-heading); line-height:1.12; letter-spacing:-.035em; }
+h1 { font-size:calc(clamp(42px,6vw,70px) * var(--site-heading-scale)); margin:16px 0; max-width:650px; }
+.hero p { max-width:560px; color:color-mix(in srgb, var(--site-on-secondary) 82%, transparent); font-size:17px; }
+.actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+.btn { border:1px solid var(--site-primary); background:var(--site-primary); color:var(--site-on-primary); padding:12px 18px; border-radius:999px; font-weight:750; transition:transform .15s, opacity .15s; }
+.btn:hover { transform:translateY(-2px); }
+.btn.secondary { background:transparent; color:var(--site-on-secondary); border-color:color-mix(in srgb, var(--site-on-secondary) 30%, transparent); }
+.hero-card { background:var(--surface); color:var(--site-on-background); border:1px solid var(--line); border-radius:calc(28px * var(--site-radius-scale)); padding:25px; box-shadow:0 18px 50px rgba(73,43,20,.09); max-width:390px; justify-self:end; width:100%; }
+.card-top { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:13px; }
+.word-big { text-align:center; padding:20px 0 18px; }
+.hanzi { font-family:var(--site-font-heading); font-size:76px; color:var(--site-primary); line-height:1.2; }
+.pinyin { font-size:20px; font-weight:750; margin-top:5px; }
+.meaning { color:var(--muted); margin-top:3px; }
+.example { background:var(--surface-soft); border-radius:15px; padding:14px; font-size:14px; }
+.example strong { display:block; margin-bottom:3px; }
+main { padding:54px 0 70px; }
+.section { scroll-margin-top:20px; margin-bottom:62px; }
+.section-head { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:23px; }
+.section-head h2 { font-size:calc(clamp(29px,4vw,42px) * var(--site-heading-scale)); margin:8px 0 0; }
+.section-head p { color:var(--muted); max-width:450px; margin:0; }
+.grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.feature { background:var(--surface); border:1px solid var(--line); border-radius:calc(20px * var(--site-radius-scale)); padding:22px; min-height:180px; }
+.feature .icon { width:43px; height:43px; display:grid; place-items:center; border-radius:14px; background:var(--surface-soft); font-size:22px; margin-bottom:18px; }
+.feature h3 { font-size:23px; margin:0 0 8px; }
+.feature p { margin:0; color:var(--muted); font-size:14px; }
+.vocab-tools { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
+.search { flex:1; min-width:190px; border:1px solid var(--line); border-radius:999px; background:var(--surface); padding:12px 16px; color:var(--site-on-background); }
+.pill { border:1px solid var(--line); background:var(--surface); color:var(--site-on-background); padding:10px 15px; border-radius:999px; }
+.pill.selected { background:var(--site-primary); color:var(--site-on-primary); border-color:var(--site-primary); }
+.vocab-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.vocab { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:18px; position:relative; }
+.vocab .hanzi { font-size:42px; }
+.vocab .translation { font-weight:750; margin-top:6px; }
+.vocab .category { color:var(--muted); font-size:12px; margin-top:8px; }
+.vocab .sound { border:1px solid var(--line); background:var(--surface-soft); color:var(--site-on-background); border-radius:50%; width:34px; height:34px; float:right; }
+.grammar-layout { display:grid; grid-template-columns:.8fr 1.2fr; gap:20px; }
+.grammar-intro { background:var(--site-primary); color:var(--site-on-primary); border-radius:calc(22px * var(--site-radius-scale)); padding:28px; }
+.grammar-intro h3 { font-size:30px; margin:12px 0; }
+.grammar-intro p { opacity:.85; }
+.grammar-list { display:grid; gap:10px; }
+.grammar-item { display:flex; align-items:center; gap:16px; border:1px solid var(--line); background:var(--surface); border-radius:16px; padding:15px 18px; }
+.grammar-symbol { font-size:25px; font-weight:800; color:var(--site-primary); width:50px; }
+.grammar-item strong { display:block; }
+.grammar-item span { font-size:13px; color:var(--muted); }
+.quiz-box { background:var(--surface); border:1px solid var(--line); border-radius:calc(24px * var(--site-radius-scale)); padding:clamp(22px,4vw,38px); }
+.quiz-meta { display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:13px; }
+.quiz-box h3 { font-size:clamp(24px,3vw,34px); margin:22px 0; }
+.answers { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.answer { border:1px solid var(--line); background:var(--surface); color:var(--site-on-background); padding:15px; text-align:left; border-radius:14px; }
+.answer:hover:not(:disabled) { border-color:var(--site-primary); }
+.answer.correct { border-color:var(--good); background:color-mix(in srgb, var(--good) 12%, var(--surface)); }
+.answer.wrong { border-color:var(--bad); background:color-mix(in srgb, var(--bad) 10%, var(--surface)); }
+.quiz-feedback { min-height:30px; margin-top:15px; font-weight:700; }
+.quiz-footer { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:15px; }
+.resource-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.resource { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:20px; }
+.resource .tag { color:var(--site-primary); font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.resource h3 { font-size:22px; margin:10px 0 7px; }
+.resource p { color:var(--muted); font-size:14px; margin:0 0 14px; }
+.resource a { color:var(--site-primary); font-weight:750; text-decoration:none; }
+.cta { background:var(--site-secondary); color:var(--site-on-secondary); border-radius:calc(25px * var(--site-radius-scale)); padding:32px; display:flex; align-items:center; justify-content:space-between; gap:25px; }
+.cta h2 { margin:0 0 8px; font-size:32px; }
+.cta p { margin:0; color:var(--muted); }
+footer { background:var(--site-primary); color:var(--site-on-primary); padding:27px 0; }
+.footer-inner { display:flex; align-items:center; justify-content:space-between; gap:18px; font-size:13px; }
+.footer-inner span { opacity:.8; }
+.toast { position:fixed; bottom:20px; left:50%; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:var(--site-on-background); color:var(--site-background); padding:10px 16px; border-radius:999px; z-index:10; transition:all .2s; font-size:14px; }
+.toast.show { opacity:1; transform:translate(-50%,0); }
+@media(max-width:850px) { .hero-grid { grid-template-columns:1fr; } .hero-card { justify-self:start; max-width:450px; } .vocab-grid { grid-template-columns:repeat(2,1fr); } .grammar-layout { grid-template-columns:1fr; } .grid3,.resource-grid { grid-template-columns:1fr 1fr; } }
+@media(max-width:620px) { .wrap { width:min(100% - 28px,1120px); } .top-inner { min-height:66px; flex-wrap:wrap; padding:11px 0; } .menu-toggle { display:block; } .nav { display:none; width:100%; padding-bottom:8px; } .nav.open { display:flex; } .nav button { flex:1 1 40%; text-align:left; } .hero { padding:45px 0; } .hero p { font-size:15px; } main { padding-top:38px; } .section { margin-bottom:45px; } .section-head { display:block; } .section-head p { margin-top:10px; } .grid3,.resource-grid { grid-template-columns:1fr; } .vocab-grid { gap:10px; } .vocab { padding:14px; } .vocab .hanzi { font-size:35px; } .answers { grid-template-columns:1fr; } .cta,.footer-inner { align-items:flex-start; flex-direction:column; } .quiz-footer { align-items:flex-start; flex-direction:column; } }
+</style>
+</head>
+<body>
+<div id="app">
+<header class="topbar">
+  <div class="wrap top-inner">
+    <div class="brand"><div class="brand-mark">汉</div><div>Hán Ngữ Mỗi Ngày<small>Học một chút · Tiến bộ mỗi ngày</small></div></div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Mở menu">☰ Menu</button>
+    <nav class="nav" id="nav">
+      <button class="active" data-target="home">Trang chủ</button>
+      <button data-target="vocabulary">Từ vựng</button>
+      <button data-target="grammar">Ngữ pháp</button>
+      <button data-target="quiz">Luyện tập</button>
+      <button data-target="resources">Tài liệu</button>
+    </nav>
+  </div>
+</header>
+<section class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">✦ Không gian tự học tiếng Trung</div>
+      <h1>Mỗi ngày một chút,<br>tiếng Trung tốt hơn.</h1>
+      <p>Góc học tập trực tuyến dành cho người mới bắt đầu. Học từ vựng, hiểu ngữ pháp và luyện tập theo cách đơn giản, dễ nhớ.</p>
+      <div class="actions"><button class="btn" data-target="vocabulary">Bắt đầu học <span aria-hidden="true">→</span></button><button class="btn secondary" data-target="quiz">Thử sức ngay</button></div>
+    </div>
+    <div class="hero-card" aria-label="Từ vựng nổi bật">
+      <div class="card-top"><span>✦ TỪ VỰNG HÔM NAY</span><span>01 / 01</span></div>
+      <div class="word-big"><div class="hanzi">学习</div><div class="pinyin">xué xí</div><div class="meaning">học tập</div></div>
+      <div class="example"><strong>Ví dụ · 例句</strong>我喜欢学习中文。<br><span style="color:var(--muted)">Wǒ xǐhuan xuéxí Zhōngwén. — Tôi thích học tiếng Trung.</span></div>
+    </div>
+  </div>
+</section>
+<main class="wrap">
+  <section class="section" aria-labelledby="whyTitle">
+    <div class="section-head"><div><div class="eyebrow">Bắt đầu từ điều cơ bản</div><h2 id="whyTitle">Học theo cách của bạn</h2></div><p>Nội dung ngắn gọn, dễ tra cứu và có thể ôn lại bất cứ lúc nào.</p></div>
+    <div class="grid3">
+      <article class="feature"><div class="icon">🀄</div><h3>Học từ mới</h3><p>Chữ Hán, pinyin, nghĩa tiếng Việt và ví dụ gần gũi.</p></article>
+      <article class="feature"><div class="icon">✍️</div><h3>Hiểu ngữ pháp</h3><p>Ghi nhớ cấu trúc câu cơ bản qua giải thích và ví dụ.</p></article>
+      <article class="feature"><div class="icon">🎯</div><h3>Ôn tập chủ động</h3><p>Làm câu hỏi ngắn để kiểm tra và củng cố kiến thức.</p></article>
+    </div>
+  </section>
+  <section class="section" id="vocabulary">
+    <div class="section-head"><div><div class="eyebrow">词汇 · Cíhuì</div><h2>Kho từ vựng</h2></div><p>Tìm kiếm từ bạn cần hoặc lọc theo chủ đề để học nhanh hơn.</p></div>
+    <div class="vocab-tools"><input class="search" id="vocabSearch" type="search" placeholder="Tìm chữ Hán, pinyin hoặc nghĩa tiếng Việt…" aria-label="Tìm từ vựng"><button class="pill selected" data-filter="Tất cả">Tất cả</button><button class="pill" data-filter="Trường học">Trường học</button><button class="pill" data-filter="Gia đình">Gia đình</button><button class="pill" data-filter="Giao tiếp">Giao tiếp</button></div>
+    <div class="vocab-grid" id="vocabGrid"></div>
+    <p id="noVocab" style="display:none;color:var(--muted)">Không tìm thấy từ phù hợp. Thử từ khóa khác nhé.</p>
+  </section>
+  <section class="section" id="grammar">
+    <div class="section-head"><div><div class="eyebrow">语法 · Yǔfǎ</div><h2>Ngữ pháp cơ bản</h2></div><p>Nhớ cấu trúc trước, luyện đặt câu sau.</p></div>
+    <div class="grammar-layout">
+      <div class="grammar-intro"><div class="eyebrow" style="color:var(--site-secondary)">MẸO HỌC NHANH</div><h3>Học cấu trúc qua ví dụ.</h3><p>Đừng chỉ học thuộc nghĩa từng từ. Hãy đọc câu mẫu và thử thay bằng từ vựng mà bạn đã biết.</p><button class="btn secondary" data-target="quiz">Làm bài tập →</button></div>
+      <div class="grammar-list">
+        <div class="grammar-item"><div class="grammar-symbol">是</div><div><strong>A + 是 + B</strong><span>Dùng để giới thiệu hoặc xác định. Ví dụ: 我是学生。— Tôi là sinh viên.</span></div></div>
+        <div class="grammar-item"><div class="grammar-symbol">有</div><div><strong>Chủ ngữ + 有 + danh từ</strong><span>Diễn tả có thứ gì đó. Ví dụ: 我有一本书。— Tôi có một quyển sách.</span></div></div>
+        <div class="grammar-item"><div class="grammar-symbol">吗</div><div><strong>Câu trần thuật + 吗？</strong><span>Biến câu thành câu hỏi có/không. Ví dụ: 你是学生吗？— Bạn là sinh viên à?</span></div></div>
+        <div class="grammar-item"><div class="grammar-symbol">在</div><div><strong>Chủ ngữ + 在 + địa điểm</strong><span>Nói ai đó ở đâu. Ví dụ: 我在学校。— Tôi ở trường.</span></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="quiz">
+    <div class="section-head"><div><div class="eyebrow">练习 · Liànxí</div><h2>Thử sức 5 câu</h2></div><p>Chọn một đáp án cho mỗi câu. Website sẽ phản hồi ngay để bạn tự ôn tập.</p></div>
+    <div class="quiz-box">
+      <div class="quiz-meta"><span id="quizCount">CÂU 1 / 5</span><span id="quizScore">Điểm: 0</span></div>
+      <h3 id="question">“学生” có nghĩa là gì?</h3>
+      <div class="answers" id="answers"></div>
+      <div class="quiz-feedback" id="quizFeedback" aria-live="polite"></div>
+      <div class="quiz-footer"><span id="quizHint" style="color:var(--muted);font-size:13px">Chọn đáp án bạn cho là đúng.</span><button class="btn" id="nextQuestion" disabled>Câu tiếp theo →</button></div>
+    </div>
+  </section>
+  <section class="section" id="resources">
+    <div class="section-head"><div><div class="eyebrow">学习资源 · Xuéxí zīyuán</div><h2>Góc tài liệu</h2></div><p>Một số nguồn trực tuyến để mở rộng việc tự học.</p></div>
+    <div class="resource-grid">
+      <article class="resource"><div class="tag">Tra cứu</div><h3>Từ điển Pleco</h3><p>Ứng dụng từ điển tiếng Trung phổ biến; có thể tra chữ và pinyin.</p><a href="https://www.pleco.com/" target="_blank" rel="noopener noreferrer">Tìm hiểu Pleco ↗</a></article>
+      <article class="resource"><div class="tag">Luyện tập</div><h3>Chinese Grammar Wiki</h3><p>Tham khảo các điểm ngữ pháp tiếng Trung được sắp xếp theo trình độ.</p><a href="https://resources.allsetlearning.com/chinese/grammar/" target="_blank" rel="noopener noreferrer">Mở tài liệu ↗</a></article>
+      <article class="resource"><div class="tag">Tài liệu lớp</div><h3>Kho dùng chung</h3><p>Đặt liên kết đến tài liệu do lớp biên soạn và được phép chia sẻ tại đây.</p><a href="#contact" id="resourcePlaceholder">Hướng dẫn đóng góp ↓</a></article>
+    </div>
+  </section>
+  <section class="section" id="contact">
+    <div class="cta"><div><h2>Cùng nhau học tốt hơn.</h2><p>Website học tập phi lợi nhuận — chia sẻ kiến thức, cùng tiến bộ.</p></div><button class="btn" id="shareBtn">Chia sẻ trang này ↗</button></div>
+  </section>
+</main>
+<footer><div class="wrap footer-inner"><div><strong>汉 Hán Ngữ Mỗi Ngày</strong><br><span>Sản phẩm học tập mẫu do sinh viên xây dựng.</span></div><span>Học tập · Chia sẻ · Cùng tiến bộ</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
+</div>
+<script>
+const vocabulary = [
+ {hanzi:'学生',pinyin:'xuésheng',meaning:'sinh viên / học sinh',category:'Trường học',example:'我是学生。'},
+ {hanzi:'老师',pinyin:'lǎoshī',meaning:'giáo viên',category:'Trường học',example:'她是老师。'},
+ {hanzi:'学校',pinyin:'xuéxiào',meaning:'trường học',category:'Trường học',example:'我在学校。'},
+ {hanzi:'同学',pinyin:'tóngxué',meaning:'bạn học',category:'Trường học',example:'他是我的同学。'},
+ {hanzi:'妈妈',pinyin:'māma',meaning:'mẹ',category:'Gia đình',example:'我妈妈很好。'},
+ {hanzi:'爸爸',pinyin:'bàba',meaning:'bố',category:'Gia đình',example:'我爸爸是老师。'},
+ {hanzi:'朋友',pinyin:'péngyou',meaning:'bạn bè',category:'Giao tiếp',example:'她是我的朋友。'},
+ {hanzi:'你好',pinyin:'nǐ hǎo',meaning:'xin chào',category:'Giao tiếp',example:'你好！你好吗？'},
+ {hanzi:'谢谢',pinyin:'xièxie',meaning:'cảm ơn',category:'Giao tiếp',example:'谢谢你！'},
+ {hanzi:'再见',pinyin:'zàijiàn',meaning:'tạm biệt',category:'Giao tiếp',example:'明天见，再见！'},
+ {hanzi:'中文',pinyin:'Zhōngwén',meaning:'tiếng Trung',category:'Trường học',example:'我学习中文。'},
+ {hanzi:'家',pinyin:'jiā',meaning:'nhà / gia đình',category:'Gia đình',example:'我家有四口人。'}
+];
+let currentFilter='Tất cả';
+const vocabGrid=document.getElementById('vocabGrid');
+function renderVocab(){
+ const q=document.getElementById('vocabSearch').value.trim().toLowerCase();
+ const items=vocabulary.filter(v=>(currentFilter==='Tất cả'||v.category===currentFilter)&&[v.hanzi,v.pinyin,v.meaning,v.category,v.example].some(s=>s.toLowerCase().includes(q)));
+ vocabGrid.innerHTML=items.map(v=>`<article class="vocab"><button class="sound" data-say="${v.hanzi}" aria-label="Nghe ${v.hanzi}">🔊</button><div class="hanzi">${v.hanzi}</div><div style="color:var(--muted);font-size:14px">${v.pinyin}</div><div class="translation">${v.meaning}</div><div class="category">${v.category} · ${v.example}</div></article>`).join('');
+ document.getElementById('noVocab').style.display=items.length?'none':'block';
+}
+renderVocab();
+document.getElementById('vocabSearch').addEventListener('input',renderVocab);
+document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{currentFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('selected',x===b));renderVocab();}));
+function speak(text){ if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='zh-CN'; u.rate=.82; window.speechSynthesis.speak(u); } else showToast('Trình duyệt này chưa hỗ trợ phát âm tự động.'); }
+document.addEventListener('click',e=>{const b=e.target.closest('[data-say]');if(b)speak(b.dataset.say);});
+const questions=[
+ {q:'“学生” có nghĩa là gì?',opts:['Giáo viên','Sinh viên / học sinh','Bạn bè','Gia đình'],correct:1,ex:'学生 (xuésheng) nghĩa là sinh viên hoặc học sinh.'},
+ {q:'“你好” dùng để làm gì?',opts:['Cảm ơn','Tạm biệt','Chào hỏi','Xin lỗi'],correct:2,ex:'你好 (nǐ hǎo) là lời chào thông dụng.'},
+ {q:'Chọn câu có nghĩa “Tôi là sinh viên”.',opts:['我是学生。','我有学生。','你是老师吗？','我在学校。'],correct:0,ex:'我是学生。Wǒ shì xuésheng. — Tôi là sinh viên.'},
+ {q:'Từ nào có nghĩa là “giáo viên”?',opts:['学校','同学','老师','中文'],correct:2,ex:'老师 (lǎoshī) nghĩa là giáo viên.'},
+ {q:'“谢谢” có nghĩa là gì?',opts:['Xin chào','Cảm ơn','Tạm biệt','Xin mời'],correct:1,ex:'谢谢 (xièxie) nghĩa là cảm ơn.'}
+];
+let qi=0,score=0,answered=false;
+function renderQuestion(){const q=questions[qi];answered=false;document.getElementById('quizCount').textContent=`CÂU ${qi+1} / ${questions.length}`;document.getElementById('quizScore').textContent=`Điểm: ${score}`;document.getElementById('question').textContent=q.q;document.getElementById('quizFeedback').textContent='';document.getElementById('quizHint').textContent='Chọn đáp án bạn cho là đúng.';document.getElementById('nextQuestion').disabled=true;document.getElementById('nextQuestion').textContent=qi===questions.length-1?'Xem kết quả':'Câu tiếp theo →';document.getElementById('answers').innerHTML=q.opts.map((o,i)=>`<button class="answer" data-answer="${i}">${String.fromCharCode(65+i)}. ${o}</button>`).join('');}
+document.getElementById('answers').addEventListener('click',e=>{const b=e.target.closest('[data-answer]');if(!b||answered)return;answered=true;const chosen=Number(b.dataset.answer),q=questions[qi];document.querySelectorAll('[data-answer]').forEach(x=>{x.disabled=true;if(Number(x.dataset.answer)===q.correct)x.classList.add('correct');});if(chosen===q.correct){score++;b.classList.add('correct');document.getElementById('quizFeedback').textContent='Chính xác! '+q.ex;}else{b.classList.add('wrong');document.getElementById('quizFeedback').textContent='Chưa đúng nhé. '+q.ex;}document.getElementById('quizFeedback').style.color=chosen===q.correct?'var(--good)':'var(--bad)';document.getElementById('quizScore').textContent=`Điểm: ${score}`;document.getElementById('quizHint').textContent='Hãy đọc giải thích rồi tiếp tục.';document.getElementById('nextQuestion').disabled=false;});
+document.getElementById('nextQuestion').addEventListener('click',()=>{if(!answered)return;if(qi<questions.length-1){qi++;renderQuestion();}else{document.getElementById('quizCount').textContent='HOÀN THÀNH';document.getElementById('question').textContent=`Bạn đạt ${score}/${questions.length} điểm!`;document.getElementById('answers').innerHTML='<button class="answer" id="restartQuiz">↻ Làm lại bài kiểm tra</button>';document.getElementById('quizFeedback').textContent=score===5?'Tuyệt vời! Bạn đã trả lời đúng tất cả.':'Ôn lại từ vựng rồi thử lại nhé!';document.getElementById('quizHint').textContent='Mỗi lần luyện tập là một cơ hội tiến bộ.';document.getElementById('nextQuestion').disabled=true;document.getElementById('quizScore').textContent=`Điểm cuối: ${score}/${questions.length}`;}});
+document.getElementById('answers').addEventListener('click',e=>{if(e.target.id==='restartQuiz'){qi=0;score=0;renderQuestion();}});
+renderQuestion();
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove('show'),2300);}
+function goTo(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.target===id));document.getElementById('nav').classList.remove('open');}
+document.querySelectorAll('[data-target]').forEach(b=>b.addEventListener('click',()=>goTo(b.dataset.target)));
+document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('nav').classList.toggle('open'));
+document.getElementById('shareBtn').addEventListener('click',async()=>{try{if(navigator.share){await navigator.share({title:'Hán Ngữ Mỗi Ngày',text:'Cùng học tiếng Trung với Hán Ngữ Mỗi Ngày',url:location.href});}else if(navigator.clipboard){await navigator.clipboard.writeText(location.href);showToast('Đã sao chép liên kết trang xem trước.');}else{showToast('Bạn có thể sao chép địa chỉ trang từ thanh trình duyệt.');}}catch(e){if(e.name!=='AbortError')showToast('Bạn có thể sao chép địa chỉ trang từ thanh trình duyệt.');}});
+document.getElementById('resourcePlaceholder').addEventListener('click',()=>showToast('Lớp có thể thay mục này bằng liên kết Google Drive dùng chung.'));
+</script>
+</body>
+</html>
